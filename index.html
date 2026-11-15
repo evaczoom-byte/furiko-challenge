@@ -53,7 +53,7 @@ th{font-size:.85rem;color:#5c6a7b}
 <button class="secondary" id="homeBtn">最初へ</button>
 </div>
 
-<p class="muted">時間を見ずに、ふりこの10往復で10秒を測ろう！</p>
+<p class="muted">時間を見ずに、10秒を測ろう！</p>
 <p id="error" role="alert"></p>
 
 <section id="home" class="card">
@@ -391,7 +391,7 @@ function render(){
       stopped?'先生の結果発表を待ちましょう':
       !start?'ふりこを準備しましょう':
       remain>0?'カウントダウンを見て準備しましょう':
-      '10往復したらストップ！';
+      '10秒たったらストップ！';
 
     $('stopMessage').textContent=
       stopped?'記録は先生の画面に届きました。':
