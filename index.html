@@ -5,783 +5,641 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>ふりこ10秒チャレンジ</title>
-
 <style>
-:root {
-  font-family: -apple-system, BlinkMacSystemFont,
-    "Hiragino Kaku Gothic ProN", sans-serif;
-  color: #172338;
-  background: #f2f6fb;
-}
-* { box-sizing: border-box; }
-body { margin: 0; }
-main {
-  max-width: 800px;
-  margin: auto;
-  padding: 20px 16px 70px;
-}
-h1 { font-size: 1.6rem; }
-h2 { font-size: 1.2rem; }
-
-.card {
-  background: white;
-  border: 1px solid #dce5f0;
-  border-radius: 18px;
-  padding: 20px;
-  margin: 16px 0;
-  box-shadow: 0 3px 15px #15253b0b;
-}
-.muted { color: #617085; }
-.hidden { display: none !important; }
-.center { text-align: center; }
-.small { font-size: .85rem; }
-
-input, button {
-  font: inherit;
-  border-radius: 12px;
-  padding: 13px;
-}
-input {
-  border: 1px solid #aebdd0;
-  width: 100%;
-  margin: 7px 0 12px;
-}
-button {
-  border: 0;
-  background: #1769ce;
-  color: white;
-  font-weight: 700;
-  cursor: pointer;
-}
-button:disabled {
-  opacity: .45;
-  cursor: default;
-}
-.big {
-  font-size: 1.6rem;
-  padding: 25px;
-  width: 100%;
-}
-.stop {
-  background: #d53f32;
-  min-height: 190px;
-  font-size: 2.3rem;
-  width: 100%;
-}
-.secondary {
-  background: #e7edf5;
-  color: #203650;
-}
-.row {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-.row > * { flex: 1; }
-
-.top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-}
-.top button { padding: 9px 12px; }
-
-.code {
-  font-size: 2rem;
-  letter-spacing: .14em;
-  font-weight: 800;
-}
-.status {
-  font-weight: 700;
-  font-size: 1.1rem;
-}
-.notice {
-  background: #fff8e8;
-  border-radius: 12px;
-  padding: 12px;
-  color: #664b16;
-}
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-th, td {
-  padding: 10px 6px;
-  text-align: left;
-  border-bottom: 1px solid #e4eaf2;
-}
-th {
-  font-size: .85rem;
-  color: #5c6a7b;
-}
-#error {
-  color: #a12222;
-  white-space: pre-wrap;
-}
-
-/* カウントダウン */
-.countdown {
-  font-size: clamp(4rem, 18vw, 8rem);
-  font-weight: 900;
-  text-align: center;
-  color: #1769ce;
-  line-height: 1.2;
-  padding: 15px 0;
-}
-.countdown.go {
-  font-size: clamp(2.5rem, 10vw, 5rem);
-  color: #15945b;
-}
-.countLabel {
-  text-align: center;
-  font-size: 1.2rem;
-  font-weight: bold;
-}
-#studentStatus {
-  font-size: 1.5rem;
-  font-weight: 800;
-}
+:root{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Kaku Gothic ProN',sans-serif;background:#f2f6fb;color:#172338}
+*{box-sizing:border-box}
+body{margin:0}
+main{max-width:900px;margin:auto;padding:20px 14px 70px}
+h1{font-size:1.55rem}
+h2{font-size:1.2rem}
+.card{background:#fff;border:1px solid #dce5f0;border-radius:18px;padding:20px;margin:15px 0;box-shadow:0 3px 15px #15253b0b}
+.hidden{display:none!important}
+.muted{color:#617085}
+.small{font-size:.85rem}
+.center{text-align:center}
+input,button{font:inherit;border-radius:12px;padding:13px}
+input{border:1px solid #aebdd0;width:100%;margin:7px 0 12px}
+button{border:0;background:#1769ce;color:#fff;font-weight:700;cursor:pointer}
+button:disabled{opacity:.45;cursor:default}
+.big{font-size:1.55rem;padding:24px;width:100%}
+.stop{background:#d53f32;min-height:190px;font-size:2.2rem;width:100%}
+.secondary{background:#e7edf5;color:#203650}
+.danger{background:#9c2630}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.row>*{flex:1}
+.top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.top button{padding:9px 12px}
+.code{font-size:2rem;letter-spacing:.14em;font-weight:800}
+.status{font-weight:700;font-size:1.1rem}
+.notice{background:#fff8e8;border-radius:12px;padding:12px;color:#664b16}
+table{width:100%;border-collapse:collapse}
+th,td{padding:10px 6px;text-align:left;border-bottom:1px solid #e4eaf2}
+th{font-size:.85rem;color:#5c6a7b}
+.countdown{font-size:clamp(4rem,18vw,8rem);font-weight:900;text-align:center;color:#1769ce;line-height:1.2;padding:15px 0}
+.countLabel{text-align:center;font-size:1.2rem;font-weight:bold}
+#studentStatus{font-size:1.5rem;font-weight:800}
+#error{color:#a12222;white-space:pre-wrap}
+.filters{display:flex;gap:6px;flex-wrap:wrap}
+.filters button{padding:9px 12px}
+.filters .selected{background:#1769ce;color:#fff}
+.filters button:not(.selected){background:#e7edf5;color:#203650}
 </style>
 </head>
-
 <body>
 <main>
 
 <div class="top">
-  <h1>⏱ ふりこ10秒チャレンジ</h1>
-  <button class="secondary" id="homeBtn">最初へ</button>
+<h1>⏱ ふりこ10秒チャレンジ</h1>
+<button class="secondary" id="homeBtn">最初へ</button>
 </div>
 
-<p class="muted">
-時間を見ずに、ふりこの10往復で10秒を測ろう！
-</p>
-
+<p class="muted">時間を見ずに、ふりこの10往復で10秒を測ろう！</p>
 <p id="error" role="alert"></p>
 
 <section id="home" class="card">
-  <h2>参加方法を選んでください</h2>
-  <div class="row">
-    <button id="teacherOpen">先生用</button>
-    <button id="studentOpen">児童用</button>
-  </div>
+<h2>参加方法を選んでください</h2>
+<div class="row">
+<button id="teacherOpen">先生用</button>
+<button id="studentOpen">児童用</button>
+</div>
 </section>
 
 <section id="teacherSetup" class="card hidden">
-  <h2>先生：ルーム作成</h2>
-  <p class="muted">6桁の参加コードを作成します。</p>
-  <button id="createRoom" class="big">
-    ルームを作る
-  </button>
+<h2>先生：ルーム作成</h2>
+<button id="createRoom" class="big">ルームを作る</button>
 </section>
 
 <section id="studentSetup" class="card hidden">
-  <h2>児童：参加</h2>
-  <label>
-    参加コード（6桁）
-    <input id="roomInput" inputmode="numeric"
-      maxlength="6" placeholder="123456">
-  </label>
-  <label>
-    出席番号または名前
-    <input id="nameInput" maxlength="24"
-      placeholder="例：12番">
-  </label>
-  <button id="joinRoom" class="big">参加する</button>
+<h2>児童：参加</h2>
+<label>参加コード（6桁）
+<input id="roomInput" inputmode="numeric" maxlength="6" placeholder="123456">
+</label>
+<label>出席番号（実名は入力しない）
+<input id="nameInput" maxlength="24" placeholder="例：12番">
+</label>
+<button id="joinRoom" class="big">参加する</button>
 </section>
 
-<!-- 教師画面 -->
 <section id="teacher" class="hidden">
-
 <div class="card">
-  <h2>先生用コントロール</h2>
+<h2>先生用コントロール</h2>
+<p>参加コード：<span id="roomCode" class="code"></span></p>
+<p>
+参加人数：<b id="joinedCount">0</b> 人 ／
+停止済み：<b id="stoppedCount">0</b> 人 ／
+接続確認：<b id="onlineCount">0</b> 人
+</p>
+<p class="muted small">接続確認は最終通信から約45秒以内の目安です。</p>
+<p id="teacherSync" class="small muted"></p>
 
-  <p>参加コード：
-    <span id="roomCode" class="code"></span>
-  </p>
+<div id="teacherCountdown" class="hidden">
+<div class="countLabel">スタートまで</div>
+<div id="teacherCount" class="countdown">5</div>
+</div>
 
-  <p>
-    参加人数：<b id="joinedCount">0</b> 人
-    ／ 停止済み：<b id="stoppedCount">0</b> 人
-  </p>
+<p class="status center" id="teacherStatus">待機中</p>
+<button id="startRound" class="big">全員スタート（5秒後）</button>
 
-  <div id="teacherCountdown" class="hidden">
-    <div class="countLabel">スタートまで</div>
-    <div id="teacherCount" class="countdown">5</div>
-  </div>
+<div class="row" style="margin-top:10px">
+<button class="secondary" id="newRound">次のチャレンジへ</button>
+<button class="secondary" id="csv">結果をCSV保存</button>
+</div>
 
-  <p class="status center" id="teacherStatus">
-    待機中
-  </p>
-
-  <button id="startRound" class="big">
-    全員スタート（5秒後）
-  </button>
-
-  <div class="row" style="margin-top:10px">
-    <button class="secondary" id="newRound">
-      次のチャレンジへ
-    </button>
-    <button class="secondary" id="csv">
-      結果をCSV保存
-    </button>
-  </div>
-
-  <p class="notice small">
-    スタートを押すと5秒のカウントダウンが始まります。
-    児童には測定時間を表示しません。
-  </p>
+<p class="notice small">
+児童の画面にタイムは表示されません。
+通信状況による測定誤差があります。
+</p>
 </div>
 
 <div class="card">
-  <h2>結果一覧</h2>
-  <div style="overflow-x:auto">
-    <table>
-      <thead>
-        <tr>
-          <th>名前</th>
-          <th>状態</th>
-          <th>測定時間</th>
-          <th>10秒との差</th>
-        </tr>
-      </thead>
-      <tbody id="results"></tbody>
-    </table>
-  </div>
+<h2>結果一覧</h2>
+<div class="filters">
+<button data-filter="all" class="selected">全員</button>
+<button data-filter="waiting">未停止</button>
+<button data-filter="rank">10秒との差順</button>
+</div>
+<div style="overflow-x:auto">
+<table>
+<thead>
+<tr>
+<th>名前</th>
+<th>接続</th>
+<th>状態</th>
+<th>測定時間</th>
+<th>10秒との差</th>
+</tr>
+</thead>
+<tbody id="results"></tbody>
+</table>
+</div>
 </div>
 
+<div class="card">
+<button id="deleteRoom" class="danger">授業終了：ルームと記録を削除</button>
+<p class="muted small">必要なCSVを保存してから削除してください。削除後は復元できません。</p>
+</div>
 </section>
 
-<!-- 児童画面 -->
 <section id="student" class="hidden">
 <div class="card center">
+<p class="muted">参加者：<b id="studentName"></b></p>
+<p id="studentSync" class="small muted"></p>
+<h2 id="studentStatus">先生のスタートを待っています</h2>
 
-  <p class="muted">
-    参加者：<b id="studentName"></b>
-  </p>
+<div id="studentCountdown" class="hidden">
+<div class="countLabel">スタートまで</div>
+<div id="studentCount" class="countdown">5</div>
+</div>
 
-  <h2 id="studentStatus">
-    先生のスタートを待っています
-  </h2>
-
-  <div id="studentCountdown" class="hidden">
-    <div class="countLabel">スタートまで</div>
-    <div id="studentCount" class="countdown">5</div>
-  </div>
-
-  <p id="studentHint" class="muted">
-    ふりこを準備しましょう
-  </p>
-
-  <button id="stopBtn" class="stop hidden" disabled>
-    ストップ！
-  </button>
-
-  <p id="stopMessage" class="status"></p>
-
+<p id="studentHint" class="muted">ふりこを準備しましょう</p>
+<button id="stopBtn" class="stop hidden" disabled>ストップ！</button>
+<p id="stopMessage" class="status"></p>
 </div>
 </section>
 
 <p class="muted small">
-測定には通信状況による誤差が生じる場合があります。
+時刻同期は簡易方式です。0.1秒単位の厳密な順位付けには使用しないでください。
 </p>
 
 </main>
 
 <script type="module">
+import {initializeApp} from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js';
+import {getAuth,signInAnonymously} from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js';
+import {getDatabase,ref,get,set,update,onValue,push,serverTimestamp} from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-database.js';
 
-import { initializeApp } from
-'https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js';
-
-import { getAuth, signInAnonymously } from
-'https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js';
-
-import {
-  getDatabase, ref, get, set, update,
-  onValue, push, serverTimestamp
-} from
-'https://www.gstatic.com/firebasejs/11.10.0/firebase-database.js';
-
-/* Firebase接続設定 */
-const firebaseConfig = {
-  apiKey: "AIzaSyCGg-myM7D6hUywA8LZeU2OopOTeD4HltU",
-  authDomain: "second-48a13.firebaseapp.com",
-  databaseURL: "https://second-48a13-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "second-48a13",
-  storageBucket: "second-48a13.firebasestorage.app",
-  messagingSenderId: "602369180814",
-  appId: "1:602369180814:web:c098b1e368c264526b35df"
+const firebaseConfig={
+  apiKey:'AIzaSyCGg-myM7D6hUywA8LZeU2OopOTeD4HltU',
+  authDomain:'second-48a13.firebaseapp.com',
+  databaseURL:'https://second-48a13-default-rtdb.asia-southeast1.firebasedatabase.app',
+  projectId:'second-48a13',
+  storageBucket:'second-48a13.firebasestorage.app',
+  messagingSenderId:'602369180814',
+  appId:'1:602369180814:web:c098b1e368c264526b35df'
 };
 
-const $ = id => document.getElementById(id);
+const $=id=>document.getElementById(id);
+const views=['home','teacherSetup','studentSetup','teacher','student'];
 
-const views = [
-  'home','teacherSetup','studentSetup',
-  'teacher','student'
-];
+let auth,db,uid,roomId,role,roomData=null;
+let offset=0,offsetReady=false;
+let unsubs=[],ownResponseUnsub=null;
+let roundId=null,stopped=false,sending=false;
+let filter='all',connected=false,joinName='',lastHeartbeat=0;
 
-let app, auth, db, uid;
-let roomId, role, roomData;
-let offset = 0;
-let unsub = null;
-let roundId = null;
-let stopped = false;
-let starting = false;
-
-const serverNow = () => Date.now() + offset;
-
-const show = id => {
-  views.forEach(x =>
-    $(x).classList.toggle('hidden', x !== id)
-  );
-};
-
-const fail = e => {
+const now=()=>Date.now()+offset;
+const show=id=>views.forEach(x=>$(x).classList.toggle('hidden',x!==id));
+const fail=e=>{
   console.error(e);
-  $('error').textContent =
-    'エラー：' + (e?.message || e);
+  $('error').textContent='エラー：'+(e?.message||e);
 };
+const clearError=()=>{$('error').textContent='';};
+const randCode=()=>String(Math.floor(100000+Math.random()*900000));
 
-const clearError = () => {
-  $('error').textContent = '';
-};
+function clearListeners(){
+  for(const f of unsubs)f();
+  unsubs=[];
+  if(ownResponseUnsub){
+    ownResponseUnsub();
+    ownResponseUnsub=null;
+  }
+  roomData=null;
+}
 
-const randCode = () =>
-  String(Math.floor(100000 + Math.random() * 900000));
+function watch(path,callback){
+  unsubs.push(onValue(ref(db,path),callback,fail));
+}
 
-function listenRoom() {
-  if (unsub) unsub();
+function watchRoom(){
+  clearListeners();
 
-  unsub = onValue(
-    ref(db, 'rooms/' + roomId),
-    snap => {
-      roomData = snap.val();
-      if (!roomData) {
+  if(role==='teacher'){
+    watch('rooms/'+roomId,s=>{
+      roomData=s.val();
+      if(!roomData){
         fail('ルームがありません');
         return;
       }
+      render();
+    });
+  }else{
+    roomData={
+      players:{},
+      responses:{},
+      currentRound:'',
+      startAt:0
+    };
+
+    watch('rooms/'+roomId+'/currentRound',s=>{
+      roomData.currentRound=s.val()||'';
+      render();
+    });
+
+    watch('rooms/'+roomId+'/startAt',s=>{
+      roomData.startAt=s.val()||0;
+      render();
+    });
+
+    watch(`rooms/${roomId}/players/${uid}`,s=>{
+      if(s.exists())roomData.players[uid]=s.val();
+      render();
+    });
+  }
+}
+
+function watchOwnResponse(){
+  if(ownResponseUnsub){
+    ownResponseUnsub();
+    ownResponseUnsub=null;
+  }
+
+  if(role!=='student'||!roomData?.currentRound)return;
+
+  const r=roomData.currentRound;
+
+  ownResponseUnsub=onValue(
+    ref(db,`rooms/${roomId}/responses/${r}/${uid}`),
+    s=>{
+      if(!roomData.responses)roomData.responses={};
+      roomData.responses[r]={[uid]:s.val()};
       render();
     },
     fail
   );
 }
 
-/* カウントダウン表示 */
-function displayCountdown(elementId, countId, startAt) {
-  const remaining = startAt - serverNow();
-  const box = $(elementId);
-  const number = $(countId);
-
-  if (startAt > 0 && remaining > 0) {
-    box.classList.remove('hidden');
-    number.classList.remove('go');
-    number.textContent =
-      Math.ceil(remaining / 1000);
-  } else {
-    box.classList.add('hidden');
+function countdown(boxId,countId,startAt){
+  const remain=startAt-now();
+  $(boxId).classList.toggle('hidden',!(startAt>0&&remain>0));
+  if(remain>0){
+    $(countId).textContent=Math.ceil(remain/1000);
   }
 }
 
-/* 画面更新 */
-function render() {
-  const r = roomData;
-  if (!r) return;
+function syncText(){
+  if(!connected)return '通信切断の可能性があります';
+  if(!offsetReady)return '時刻同期を確認中';
+  return '接続中・時刻補正あり（精度保証なし）';
+}
 
-  const players = Object.entries(r.players || {})
-    .map(([id, v]) => ({ id, ...v }))
-    .sort((a, b) =>
-      (a.name || '').localeCompare(
-        b.name || '', 'ja', { numeric: true }
-      )
-    );
+function render(){
+  const r=roomData;
+  if(!r)return;
 
-  const current = r.currentRound;
-  const responses = current
-    ? (r.responses?.[current] || {})
-    : {};
+  const current=r.currentRound||'';
+  const start=r.startAt||0;
+  const remain=start-now();
 
-  const until = (r.startAt || 0) - serverNow();
+  if(role==='teacher'){
+    const players=Object.entries(r.players||{})
+      .map(([id,p])=>({id,...p}))
+      .sort((a,b)=>
+        (a.name||'').localeCompare(b.name||'','ja',{numeric:true})
+      );
 
-  if (role === 'teacher') {
+    const responses=r.responses?.[current]||{};
 
-    $('roomCode').textContent = roomId;
-    $('joinedCount').textContent = players.length;
-    $('stoppedCount').textContent =
-      Object.keys(responses).length;
+    $('roomCode').textContent=roomId;
+    $('joinedCount').textContent=players.length;
+    $('stoppedCount').textContent=Object.keys(responses).length;
+    $('onlineCount').textContent=players.filter(
+      p=>p.lastSeen&&now()-p.lastSeen<45000
+    ).length;
+    $('teacherSync').textContent=syncText();
 
-    displayCountdown(
-      'teacherCountdown',
-      'teacherCount',
-      r.startAt
-    );
+    countdown('teacherCountdown','teacherCount',start);
 
-    $('teacherStatus').textContent =
-      !r.startAt
-        ? '待機中'
-        : until > 0
-          ? 'ふりこを準備してください'
-          : 'スタート！ 計測中';
+    $('teacherStatus').textContent=
+      !start?'待機中':
+      remain>0?'ふりこを準備してください':
+      'スタート！ 計測中';
 
-    $('startRound').disabled = !!r.startAt;
+    $('startRound').disabled=!!start||!connected;
 
-    $('results').replaceChildren();
+    let rows=players.map(p=>{
+      const d=responses[p.id];
+      const sec=d?(d.stoppedAt-start)/1000:null;
+      return {
+        ...p,
+        sec,
+        online:!!p.lastSeen&&now()-p.lastSeen<45000
+      };
+    });
 
-    for (const p of players) {
-      const d = responses[p.id];
-      const tr = document.createElement('tr');
+    if(filter==='waiting'){
+      rows=rows.filter(p=>p.sec===null);
+    }
 
-      const secs = d
-        ? (d.stoppedAt - r.startAt) / 1000
-        : null;
+    if(filter==='rank'){
+      rows.sort((a,b)=>
+        (a.sec===null?Infinity:Math.abs(a.sec-10))-
+        (b.sec===null?Infinity:Math.abs(b.sec-10))
+      );
+    }
 
-      const vals = [
-        p.name || '（名前なし）',
-        d ? '停止済み' : '待機中',
-        d ? secs.toFixed(3) + ' 秒' : '—',
-        d ? Math.abs(secs - 10).toFixed(3) + ' 秒' : '—'
+    const body=$('results');
+    body.replaceChildren();
+
+    for(const p of rows){
+      const tr=document.createElement('tr');
+      const vals=[
+        p.name||'（名前なし）',
+        p.online?'接続確認':'未確認',
+        p.sec===null?'未停止':'停止済み',
+        p.sec===null?'—':p.sec.toFixed(3)+' 秒',
+        p.sec===null?'—':Math.abs(p.sec-10).toFixed(3)+' 秒'
       ];
 
-      for (const val of vals) {
-        const td = document.createElement('td');
-        td.textContent = val;
+      for(const value of vals){
+        const td=document.createElement('td');
+        td.textContent=value;
         tr.append(td);
       }
-
-      $('results').append(tr);
+      body.append(tr);
+    }
+  }else if(role==='student'){
+    if(current!==roundId){
+      roundId=current;
+      stopped=false;
+      sending=false;
+      watchOwnResponse();
     }
 
-  } else if (role === 'student') {
+    const response=r.responses?.[current]?.[uid];
 
-    const p = r.players?.[uid];
-    $('studentName').textContent = p?.name || '';
-
-    /* 新しいチャレンジで状態を初期化 */
-    if (current !== roundId) {
-      roundId = current;
-      stopped = false;
-      starting = false;
+    if(response){
+      stopped=true;
+      sending=false;
     }
 
-    const response = responses[uid];
+    const active=!!start&&!!current&&remain<=0&&!stopped;
 
-    if (response) {
-      stopped = true;
-      starting = false;
-    }
+    $('studentName').textContent=r.players?.[uid]?.name||joinName;
+    $('studentSync').textContent=syncText();
 
-    displayCountdown(
-      'studentCountdown',
-      'studentCount',
-      r.startAt
-    );
+    countdown('studentCountdown','studentCount',start);
 
-    const active =
-      !!r.startAt &&
-      !!current &&
-      until <= 0 &&
-      !stopped;
+    $('stopBtn').classList.toggle('hidden',!active);
+    $('stopBtn').disabled=!active||sending||!connected;
 
-    $('stopBtn').classList.toggle(
-      'hidden', !active
-    );
+    $('studentStatus').textContent=
+      stopped?'送信しました！':
+      !start?'先生のスタートを待っています':
+      remain>0?'もうすぐスタート！':'スタート！';
 
-    $('stopBtn').disabled =
-      !active || starting;
+    $('studentHint').textContent=
+      stopped?'先生の結果発表を待ちましょう':
+      !start?'ふりこを準備しましょう':
+      remain>0?'カウントダウンを見て準備しましょう':
+      '10往復したらストップ！';
 
-    if (stopped) {
-      $('studentStatus').textContent =
-        '送信しました！';
-      $('studentHint').textContent =
-        '先生の結果発表を待ちましょう';
-      $('stopMessage').textContent =
-        '記録は先生の画面に届きました。';
-
-    } else if (!r.startAt) {
-      $('studentStatus').textContent =
-        '先生のスタートを待っています';
-      $('studentHint').textContent =
-        'ふりこを準備しましょう';
-      $('stopMessage').textContent = '';
-
-    } else if (until > 0) {
-      $('studentStatus').textContent =
-        'もうすぐスタート！';
-      $('studentHint').textContent =
-        'カウントダウンを見て準備しましょう';
-      $('stopMessage').textContent = '';
-
-    } else {
-      $('studentStatus').textContent =
-        'スタート！';
-      $('studentHint').textContent =
-        '10往復したらストップ！';
-      $('stopMessage').textContent = '';
-    }
+    $('stopMessage').textContent=
+      stopped?'記録は先生の画面に届きました。':
+      sending?'送信中…':'';
   }
 }
 
-/* ホーム */
-$('homeBtn').onclick = () => {
-  if (unsub) {
-    unsub();
-    unsub = null;
-  }
-
-  role = null;
-  roomData = null;
-  roundId = null;
-  stopped = false;
-  starting = false;
-
+$('homeBtn').onclick=()=>{
+  clearListeners();
+  role=null;
+  roundId=null;
+  stopped=false;
+  sending=false;
   show('home');
   clearError();
 };
 
-$('teacherOpen').onclick = () =>
-  show('teacherSetup');
+$('teacherOpen').onclick=()=>show('teacherSetup');
+$('studentOpen').onclick=()=>show('studentSetup');
 
-$('studentOpen').onclick = () =>
-  show('studentSetup');
-
-/* ルーム作成 */
-$('createRoom').onclick = async () => {
-  try {
+$('createRoom').onclick=async()=>{
+  const button=$('createRoom');
+  try{
     clearError();
+    button.disabled=true;
 
     let code;
 
-    for (let i = 0; i < 15; i++) {
-      const c = randCode();
-
-      if (!(await get(ref(db, 'rooms/' + c))).exists()) {
-        code = c;
+    for(let i=0;i<12;i++){
+      const candidate=randCode();
+      try{
+        await set(ref(db,'rooms/'+candidate),{
+          teacher:uid,
+          createdAt:serverTimestamp(),
+          startAt:0,
+          currentRound:'',
+          players:{}
+        });
+        code=candidate;
         break;
+      }catch(e){
+        if(
+          e.code!=='PERMISSION_DENIED'&&
+          e.code!=='permission-denied'
+        )throw e;
       }
     }
 
-    if (!code) {
-      throw Error('コードを作れませんでした');
-    }
+    if(!code)throw Error('ルームを作れませんでした。もう一度試してください');
 
-    roomId = code;
-    role = 'teacher';
-
-    await set(ref(db, 'rooms/' + code), {
-      teacher: uid,
-      createdAt: serverTimestamp(),
-      startAt: 0,
-      currentRound: '',
-      players: {}
-    });
-
+    roomId=code;
+    role='teacher';
     show('teacher');
-    listenRoom();
-
-  } catch (e) {
+    watchRoom();
+  }catch(e){
     fail(e);
+  }finally{
+    button.disabled=false;
   }
 };
 
-/* 児童参加 */
-$('joinRoom').onclick = async () => {
-  try {
+$('joinRoom').onclick=async()=>{
+  try{
     clearError();
 
-    const code = $('roomInput').value.trim();
-    const name = $('nameInput').value.trim();
+    const code=$('roomInput').value.trim();
+    const name=$('nameInput').value.trim();
 
-    if (!/^\d{6}$/.test(code)) {
+    if(!/^\d{6}$/.test(code)){
       throw Error('6桁の参加コードを入力してください');
     }
-
-    if (!name) {
-      throw Error('出席番号または名前を入力してください');
+    if(!name||name.length>24){
+      throw Error('出席番号を入力してください');
     }
 
-    const snap = await get(
-      ref(db, 'rooms/' + code)
-    );
+    roomId=code;
+    joinName=name;
 
-    if (!snap.exists()) {
-      throw Error('参加コードが見つかりません');
-    }
+    await set(ref(db,`rooms/${code}/players/${uid}`),{
+      name,
+      joinedAt:serverTimestamp(),
+      lastSeen:serverTimestamp()
+    });
 
-    roomId = code;
-    role = 'student';
-
-    await set(
-      ref(db, `rooms/${code}/players/${uid}`),
-      {
-        name,
-        joinedAt: serverTimestamp()
-      }
-    );
-
-    roundId = null;
-    stopped = false;
-    starting = false;
-
+    role='student';
+    roundId=null;
+    stopped=false;
+    sending=false;
     show('student');
-    listenRoom();
-
-  } catch (e) {
+    watchRoom();
+  }catch(e){
     fail(e);
   }
 };
 
-/* 全員スタート */
-$('startRound').onclick = async () => {
-  try {
+$('startRound').onclick=async()=>{
+  try{
     clearError();
 
-    const id = push(
-      ref(db, 'temporaryIds')
-    ).key;
+    const id=push(ref(db,'rooms/'+roomId+'/responses')).key;
 
-    await update(
-      ref(db, 'rooms/' + roomId),
-      {
-        currentRound: id,
-        startAt: serverNow() + 5000
-      }
-    );
-
-  } catch (e) {
+    await update(ref(db,'rooms/'+roomId),{
+      currentRound:id,
+      startAt:now()+5000
+    });
+  }catch(e){
     fail(e);
   }
 };
 
-/* 次のチャレンジ */
-$('newRound').onclick = async () => {
-  try {
+$('newRound').onclick=async()=>{
+  try{
     clearError();
-
-    starting = false;
-    stopped = false;
-
-    await update(
-      ref(db, 'rooms/' + roomId),
-      {
-        currentRound: '',
-        startAt: 0
-      }
-    );
-
-  } catch (e) {
+    await update(ref(db,'rooms/'+roomId),{
+      currentRound:'',
+      startAt:0
+    });
+  }catch(e){
     fail(e);
   }
 };
 
-/* 児童ストップ */
-$('stopBtn').onclick = async () => {
-  if (
-    stopped ||
-    starting ||
-    !roomData?.startAt ||
-    serverNow() < roomData.startAt
-  ) return;
+$('stopBtn').onclick=async()=>{
+  if(
+    stopped||sending||!connected||
+    !roomData?.startAt||
+    now()<roomData.startAt||
+    !roomData.currentRound
+  )return;
 
-  starting = true;
-  $('stopBtn').disabled = true;
+  const selected=roomData.currentRound;
+  const t=now();
 
-  const selectedRound = roomData.currentRound;
-  const t = serverNow();
+  sending=true;
+  $('stopBtn').disabled=true;
+  render();
 
-  try {
+  try{
     await set(
-      ref(
-        db,
-        `rooms/${roomId}/responses/${selectedRound}/${uid}`
-      ),
-      { stoppedAt: t }
+      ref(db,`rooms/${roomId}/responses/${selected}/${uid}`),
+      {stoppedAt:t}
     );
-
-    stopped = true;
-    starting = false;
+    stopped=true;
+    sending=false;
     render();
-
-  } catch (e) {
-    starting = false;
+  }catch(e){
+    sending=false;
     fail(e);
     render();
   }
 };
 
-/* CSV保存 */
-$('csv').onclick = () => {
-  if (!roomData) return;
+$('csv').onclick=()=>{
+  if(!roomData)return;
 
-  const rows = [
-    ['名前', '計測秒', '10秒との差']
-  ];
+  const r=roomData;
+  const rows=[['名前','計測秒','10秒との差']];
 
-  const r = roomData;
-
-  for (
-    const [id, item] of
-    Object.entries(
-      r.responses?.[r.currentRound] || {}
-    )
-  ) {
-    const secs =
-      (item.stoppedAt - r.startAt) / 1000;
-
+  for(const [id,item] of Object.entries(
+    r.responses?.[r.currentRound]||{}
+  )){
+    const sec=(item.stoppedAt-r.startAt)/1000;
     rows.push([
-      r.players?.[id]?.name || id,
-      secs.toFixed(3),
-      Math.abs(secs - 10).toFixed(3)
+      r.players?.[id]?.name||id,
+      sec.toFixed(3),
+      Math.abs(sec-10).toFixed(3)
     ]);
   }
 
-  const csv = '\ufeff' +
-    rows.map(row =>
-      row.map(v =>
-        '"' + String(v).replaceAll('"', '""') + '"'
-      ).join(',')
-    ).join('\r\n');
+  const csv='\ufeff'+rows.map(row=>
+    row.map(v=>
+      '"'+String(v).replaceAll('"','""')+'"'
+    ).join(',')
+  ).join('\r\n');
 
-  const a = document.createElement('a');
-
-  a.href = URL.createObjectURL(
-    new Blob([csv], {
-      type: 'text/csv;charset=utf-8'
-    })
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(
+    new Blob([csv],{type:'text/csv;charset=utf-8'})
   );
-
-  a.download = 'ふりこチャレンジ.csv';
+  a.download='ふりこチャレンジ.csv';
   a.click();
 
-  setTimeout(
-    () => URL.revokeObjectURL(a.href),
-    1000
-  );
+  setTimeout(()=>URL.revokeObjectURL(a.href),1000);
 };
 
-/* Firebase初期化 */
-try {
-  app = initializeApp(firebaseConfig);
-  auth = getAuth(app);
-  db = getDatabase(app);
+$('deleteRoom').onclick=async()=>{
+  if(!confirm(
+    'このルームと全記録を削除します。CSVは保存しましたか？'
+  ))return;
 
-  onValue(
-    ref(db, '.info/serverTimeOffset'),
-    snap => {
-      offset = snap.val() || 0;
-    }
-  );
+  try{
+    await set(ref(db,'rooms/'+roomId),null);
+    clearListeners();
+    role=null;
+    show('home');
+    clearError();
+  }catch(e){
+    fail(e);
+  }
+};
+
+document.querySelectorAll('[data-filter]').forEach(b=>{
+  b.onclick=()=>{
+    filter=b.dataset.filter;
+    document.querySelectorAll('[data-filter]').forEach(x=>{
+      x.classList.toggle('selected',x===b);
+    });
+    render();
+  };
+});
+
+try{
+  initializeApp(firebaseConfig);
+  auth=getAuth();
+  db=getDatabase();
+
+  onValue(ref(db,'.info/connected'),s=>{
+    connected=!!s.val();
+    if(roomData)render();
+  });
+
+  onValue(ref(db,'.info/serverTimeOffset'),s=>{
+    offset=s.val()||0;
+    offsetReady=true;
+    if(roomData)render();
+  });
 
   await signInAnonymously(auth);
-  uid = auth.currentUser.uid;
+  uid=auth.currentUser.uid;
 
-  /* 100ミリ秒ごとに表示更新 */
-  setInterval(() => {
-    if (roomData) render();
-  }, 100);
+  setInterval(()=>{
+    if(roomData)render();
 
-} catch (e) {
+    if(
+      role==='student'&&connected&&roomId&&
+      Date.now()-lastHeartbeat>15000
+    ){
+      lastHeartbeat=Date.now();
+      update(
+        ref(db,`rooms/${roomId}/players/${uid}`),
+        {lastSeen:serverTimestamp()}
+      ).catch(fail);
+    }
+  },200);
+
+}catch(e){
   fail(e);
 }
-
 </script>
 </body>
 </html>
